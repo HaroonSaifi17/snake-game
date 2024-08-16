@@ -9,7 +9,7 @@ To install the game, you need to have Rust installed on your machine. You can in
 After installing Rust, you can clone this repository and run the following command in the root directory of the project:
 
 ```bash 
-cargo run
+cargo build && sudo ./target/debug/snake-game
 ```
 
 ## Controls 
@@ -19,7 +19,7 @@ cargo run
 
 ## Screenshot 
 
-![screenshot](screenshot.jpg)
+![screenshot](Screenshot.jpg)
 
 ## License 
 
