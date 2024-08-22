@@ -84,11 +84,8 @@ impl Snake {
 
     pub fn has_collided(&self, width: u16, height: u16) -> bool {
         let head = self.body[0];
-        head.0 == 0
-            || head.0 >= width
-            || head.1 == 0
-            || head.1 >= height
-            || self.body[1..self.body.len() - 1].contains(&head)
+        !(head.0 != 65534 && head.0 < width && head.1 !=65534 && head.1 < height)
+        || self.body[1..self.body.len() - 1].contains(&head)
     }
     pub fn has_eaten_food<W: Write>(&self, food: &crate::food::Food, stdout: &mut W ) -> bool {
         let bool = self.body[0].0 == food.x && self.body[0].1 == food.y;

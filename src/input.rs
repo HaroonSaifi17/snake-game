@@ -2,7 +2,7 @@ use crossterm::event::{self, Event, KeyCode};
 use std::time::Duration;
 
 pub fn handle_input(snake: &mut crate::snake::Snake) {
-    if event::poll(Duration::from_millis(200)).unwrap() {
+    if event::poll(Duration::from_millis(1000)).unwrap() {
         if let Event::Key(key_event) = event::read().unwrap() {
             match (key_event.code, &snake.direction) {
                 (KeyCode::Esc, _) => {
