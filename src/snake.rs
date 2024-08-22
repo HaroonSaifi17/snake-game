@@ -73,6 +73,9 @@ impl Snake {
             stdout.queue(cursor::MoveTo(segment.0, segment.1)).unwrap();
             stdout.queue(Print("  ")).unwrap();
         }
+        stdout.queue(cursor::MoveTo(self.body[self.body.len()-1].0, self.body[self.body.len()-1].1)).unwrap();
+        stdout.queue(SetBackgroundColor(Color::Rgb { r: 30, g: 30, b: 30 })).unwrap();
+        stdout.queue(Print("  ")).unwrap();
     }
 
     pub fn change_direction(&mut self, new_direction: Direction) {
@@ -87,9 +90,13 @@ impl Snake {
             || head.1 >= height
             || self.body[1..self.body.len() - 1].contains(&head)
     }
-
-    pub fn has_eaten_food(&self, food: &crate::food::Food) -> bool {
-        self.body[0].0 == food.x && self.body[0].1 == food.y
+    pub fn has_eaten_food<W: Write>(&self, food: &crate::food::Food, stdout: &mut W ) -> bool {
+        let bool = self.body[0].0 == food.x && self.body[0].1 == food.y;
+        if bool{
+            stdout.queue(cursor::MoveTo(food.x, food.y)).unwrap();
+            stdout.queue(Print("  ")).unwrap();
+        }
+        bool
     }
 
     pub fn grow(&mut self) {

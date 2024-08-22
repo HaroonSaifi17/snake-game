@@ -16,11 +16,12 @@ fn main() {
     let mut snake = snake::Snake::new(width, height);
     let mut food = food::Food::new(width, height);
 
+    terminal_utils::clear_screen(&mut stdout);
+
     loop {
         input::handle_input(&mut snake);
         snake.move_forward(width, height);
 
-        terminal_utils::clear_screen(&mut stdout);
         snake.draw(&mut stdout);
         food.draw(&mut stdout);
         terminal_utils::display_score(&mut stdout, score, width, height);
@@ -32,7 +33,7 @@ fn main() {
             break;
         }
 
-        if snake.has_eaten_food(&food) {
+        if snake.has_eaten_food(&food , &mut stdout) {
             snake.grow();
             food = food::Food::new(width, height);
             score += 1;

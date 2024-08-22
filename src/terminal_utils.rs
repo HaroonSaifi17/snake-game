@@ -4,7 +4,7 @@ use crossterm::{
     terminal::{self, ClearType},
     QueueableCommand,
 };
-use std::io::Write;
+use std::io:: Write;
 
 pub fn initialize_terminal<W: Write>(stdout: &mut W) {
     terminal::enable_raw_mode().unwrap();
@@ -19,16 +19,14 @@ pub fn reset_terminal<W: Write>(stdout: &mut W, width: u16, height: u16) {
 }
 
 pub fn clear_screen<W: Write>(stdout: &mut W) {
-    execute!(
-        stdout,
-        SetBackgroundColor(Color::Rgb {
+    stdout
+        .queue(SetBackgroundColor(Color::Rgb {
             r: 30,
             g: 30,
-            b: 30
-        }),
-        terminal::Clear(ClearType::All)
-    )
-    .unwrap();
+            b: 30,
+        }))
+        .unwrap();
+    stdout.queue(terminal::Clear(ClearType::All)).unwrap();
 }
 
 pub fn display_game_over<W: Write>(stdout: &mut W, width: u16, height: u16) {
