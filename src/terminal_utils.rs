@@ -12,10 +12,10 @@ pub fn initialize_terminal<W: Write>(stdout: &mut W) {
 }
 
 pub fn reset_terminal<W: Write>(stdout: &mut W, width: u16, height: u16) {
-    stdout.queue(cursor::Show).unwrap();
-    stdout.queue(cursor::MoveTo(width, height + 3)).unwrap();
-    stdout.flush().unwrap();
     terminal::disable_raw_mode().unwrap();
+    stdout.queue(cursor::MoveTo(width, height + 2)).unwrap();
+    stdout.queue(cursor::Show).unwrap();
+    stdout.flush().unwrap();
 }
 
 pub fn clear_screen<W: Write>(stdout: &mut W) {
